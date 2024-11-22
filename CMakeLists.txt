@@ -136,8 +136,7 @@ if(GSOAP_FOUND)
 endif()
 
 # Find FFmpeg libraries
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(FFMPEG REQUIRED IMPORTED_TARGET libavcodec libavformat libavutil libswresample libswscale)
+find_package(FFmpeg REQUIRED COMPONENTS avcodec avdevice avformat avutil swresample swscale)
 
 # A fix for CMake recompiling the source files for every target.
 add_library(zm STATIC ${ZM_BIN_SRC_FILES})
@@ -161,13 +160,12 @@ endif()
 # Linking libraries to the target zm
 target_link_libraries(zm
   PUBLIC
-    PkgConfig::FFMPEG
-    FFMPEG::avcodec
-    FFMPEG::avdevice
-    FFMPEG::avformat
-    FFMPEG::avutil
-    FFMPEG::swresample
-    FFMPEG::swscale
+    FFmpeg::avcodec
+    FFmpeg::avdevice
+    FFmpeg::avformat
+    FFmpeg::avutil
+    FFmpeg::swresample
+    FFmpeg::swscale
     libbcrypt::bcrypt
     RtspServer::RtspServer
     martinmoene::span-lite
