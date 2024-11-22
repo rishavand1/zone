@@ -135,6 +135,10 @@ if(GSOAP_FOUND)
 
 endif()
 
+# Find FFmpeg libraries
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(FFMPEG REQUIRED IMPORTED_TARGET libavcodec libavformat libavutil libswresample libswscale)
+
 # A fix for CMake recompiling the source files for every target.
 add_library(zm STATIC ${ZM_BIN_SRC_FILES})
 
@@ -154,8 +158,10 @@ if(GSOAP_FOUND)
   )
 endif()
 
+# Linking libraries to the target zm
 target_link_libraries(zm
   PUBLIC
+    PkgConfig::FFMPEG
     FFMPEG::avcodec
     FFMPEG::avdevice
     FFMPEG::avformat
